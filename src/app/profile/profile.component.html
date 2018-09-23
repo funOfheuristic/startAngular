@@ -1,0 +1,16 @@
+<h1 [appCustomeDerective]="'red'">
+  The User Id is {{userId}} with {{childData}}
+</h1>
+<h2 *appStructuralDirectives="name">Hi I am Subart</h2>
+<!-- <h3>{{date | date : 'dd/MM/yyyy'}}</h3> -->
+<h3>{{numVal | addition : 5000}}</h3>
+<!-- <ng-template [appStructuralDirectives]="name"> 
+  <h1>Hi I am Subart</h1>
+</ng-template> -->
+<!-- <ng-template #another><h2>I am Biku !!!!</h2></ng-template> -->
+<button routerLink="/login">Back to login</button>
+<button routerLink="login">To child</button>
+<app-peofile-child [profileData] = "userId" (stringOutput)="dispalyChildValue($event)"></app-peofile-child>
+<router-outlet></router-outlet>
+
+
