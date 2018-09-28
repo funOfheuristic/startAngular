@@ -7,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class AdditionPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    console.log("check");
+    // console.log("check");
     return value + args;
   }
 
