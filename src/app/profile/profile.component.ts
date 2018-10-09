@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { fromEvent } from 'rxjs';
 import { of } from 'rxjs';
+import { share } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -22,38 +23,38 @@ export class ProfileComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.subscribe( 
-      params =>  this.userId = params.userId
+    this.route.params.subscribe(
+      params => this.userId = params.userId
     );
 
     this.clicks = fromEvent(this.button.nativeElement, 'click');
 
-    let mouseEvent  = this.clicks.subscribe(
+    let mouseEvent = this.clicks.subscribe(
       mouse => console.log(mouse.clientX, mouse.clientY)
     )
-    
-    setTimeout(() =>{
-      mouseEvent.unsubscribe();
-    },5000)
 
-    const arr = [1,2,3,4,5,5,6];
+    setTimeout(() => {
+      mouseEvent.unsubscribe();
+    }, 5000)
+
+    const arr = [1, 2, 3, 4, 5, 5, 6];
     const obj = {
       name: 'Subrat',
       from: 'Bangalore'
     };
-    let stringArray = ['hi', 'i' ,'am', 'Biku'];
+    let stringArray = ['hi', 'i', 'am', 'Biku'];
 
-    let obs = of(23, arr, obj, 'Subart' , stringArray, {});
+    let obs = of(23, arr, obj, 'Subart', stringArray, {});
 
-    obs.subscribe(
-      data => console.log(data)
-    )
+    // obs.subscribe(
+    //   data => console.log(data)
+    // )
 
-    setTimeout(() =>{
-      obs.subscribe(
-        data => console.log(data)
-      )
-    },1000)
+    // setTimeout(() => {
+    //   obs.subscribe(
+    //     data => console.log(data)
+    //   )
+    // }, 1000)
 
     let obser = new Observable((observer) => {
       observer.next("The 1st emit");
@@ -64,8 +65,24 @@ export class ProfileComponent implements OnInit {
       }, 3000)
     });
 
-    
-    
+    // // Create a new Observable that will deliver the above sequence
+    const SequenceOld = new Observable(this.multipleSubscriber());
+
+    const Sequence = SequenceOld.pipe(share());
+
+    // Subscribe starts the clock, and begins to emit after 1 second
+    Sequence.subscribe({
+      next(num) { console.log('1st subscribe: ' + num); },
+      complete() { console.log('1st finished.'); }
+    });
+
+    // After 1 1/2 seconds, subscribe again (should "miss" the first value).
+    setTimeout(() => {
+      Sequence.subscribe({
+        next(num) { console.log('2nd subscribe: ' + num); },
+        complete() { console.log('2nd finished.'); }
+      });
+    }, 3000);
 
     // obser.subscribe(
     //   // {
@@ -80,54 +97,39 @@ export class ProfileComponent implements OnInit {
     // )
   }
 
-  canDeactivate(): Observable<boolean> | boolean {
-    // Allow synchronous navigation (`true`) if no crisis or the crisis is unchanged
-    console.log("in profile");
-    return window.confirm('Discard changes?');
+  multipleSubscriber() {
+    const arr = [1, 2, 3, 4, 5, 6];
+    
+    return (observer) => {
+      this.run(observer, arr, 0);
+      return {
+        unsubscribe() {
+        }
+      };
+    }
   }
 
-  dispalyChildValue(event){
-    this.childData = event;
+  run(observer, arr, index) {
+    return setTimeout(() => {
+      observer.next(arr[index]);
+      if (index === arr.length - 1) {
+        observer.complete();
+      } else {
+        this.run(observer, arr, ++index);
+      }
+    }, 1000);
   }
 
-  
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  multicastSequenceSubscriber() {
-    const arr = [1,2,3,4,5,6,7];
+  multiCastSubscriber() {
+    const arr = [1, 2, 3, 4, 5, 6, 7];
     const observers = [];
-    // Still a single timeoutId because there will only ever be one
-    // set of values being generated, multicasted to each subscriber
     let timeoutId;
-  
-    // Return the subscriber function (runs when subscribe()
-    // function is invoked)
+
     return (observer) => {
       observers.push(observer);
-      // When this is the first subscription, start the sequence
+      // When this is the first subscription, start
       if (observers.length === 1) {
-        timeoutId = this.runSequence({
+        timeoutId = this.run({
           next(val) {
             // Iterate through observers and notify all subscriptions
             observers.forEach(obs => obs.next(val));
@@ -138,12 +140,9 @@ export class ProfileComponent implements OnInit {
           }
         }, arr, 0);
       }
-  
+
       return {
         unsubscribe() {
-          // Remove from the observers array so it's no longer notified
-          console.log("called");
-
           observers.splice(observers.indexOf(observer), 1);
           // If there's no more listeners, do cleanup
           if (observers.length === 0) {
@@ -154,28 +153,44 @@ export class ProfileComponent implements OnInit {
     };
   }
 
-  multipleSubscriber() {
-    const arr = [1, 2, 3, 4, 5, 6];
-    let timeoutId;
-    return (observer) => {
-      this.runSequence(observer,arr,0);
 
-      return {unsubscribe() {
-        console.log("timeout called");
-        clearTimeout(timeoutId);
-      }};
-    }
+  canDeactivate(): Observable<boolean> | boolean {
+    // Allow synchronous navigation (`true`) if no crisis or the crisis is unchanged
+    console.log("in profile");
+    return window.confirm('Discard changes?');
   }
 
-  runSequence(observer, arr, index) {
-    return setTimeout(() => {
-      observer.next(arr[index]);
-      if (index === arr.length - 1) {
-        observer.complete();
-      } else {
-        this.runSequence(observer, arr, ++index);
-      }
-    }, 1000);
+  dispalyChildValue(event) {
+    this.childData = event;
   }
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
 
 }
