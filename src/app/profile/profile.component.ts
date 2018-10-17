@@ -71,18 +71,18 @@ export class ProfileComponent implements OnInit {
     const Sequence = SequenceOld.pipe(share());
 
     // Subscribe starts the clock, and begins to emit after 1 second
-    Sequence.subscribe({
-      next(num) { console.log('1st subscribe: ' + num); },
-      complete() { console.log('1st finished.'); }
-    });
+    // Sequence.subscribe({
+    //   next(num) { console.log('1st subscribe: ' + num); },
+    //   complete() { console.log('1st finished.'); }
+    // });
 
-    // After 1 1/2 seconds, subscribe again (should "miss" the first value).
-    setTimeout(() => {
-      Sequence.subscribe({
-        next(num) { console.log('2nd subscribe: ' + num); },
-        complete() { console.log('2nd finished.'); }
-      });
-    }, 3000);
+    // // After 1 1/2 seconds, subscribe again (should "miss" the first value).
+    // setTimeout(() => {
+    //   Sequence.subscribe({
+    //     next(num) { console.log('2nd subscribe: ' + num); },
+    //     complete() { console.log('2nd finished.'); }
+    //   });
+    // }, 3000);
 
     // obser.subscribe(
     //   // {
