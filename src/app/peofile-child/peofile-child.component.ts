@@ -43,24 +43,28 @@ export class PeofileChildComponent implements OnInit {
       }, () => console.log("done")
     )
 
-    let serverData1 = this.httpService.httpGet("http://localhost:3000/data");
-    let serverData2 = this.httpService.httpGet("http://localhost:3000/data");
-    let serverData3 = this.httpService.httpGet("http://localhost:3000/data");
-    let serverData4 = this.httpService.httpGet("http://localhost:3000/data");
 
-    let multiCall = forkJoin(serverData1,serverData2, serverData3, serverData4);
+    let serverData1 = this.httpService.httpGet("http://localhost:3000/data/2");
+    let serverData2 = this.httpService.httpGet("http://localhost:3000/data/123");
+    let serverData3 = this.httpService.httpGet("http://localhost:3000/data/43");
+    let serverData4 = this.httpService.httpGet("http://localhost:3000/data/321");
+
+    const arr = [serverData1, serverData2, serverData3, serverData4];
+
+    let multiCall = forkJoin(arr);
 
     multiCall.subscribe(
       data => {
-        console.log(JSON.stringify(data[0], null, 2));
+        console.log(JSON.stringify(data[0],null,2));
+        console.log(JSON.stringify(data[1],null,2));
+        console.log(JSON.stringify(data[2],null,2));
+        console.log(JSON.stringify(data[3],null,2));
       },err => {
-        console.error(err);
-      }, () => console.log("done")
+        console.error(err)
+      },() => console.log("done")
     )
+
   }
-
-
-
 
   emmitString(data) {
     this.stringOutput.emit(data);
