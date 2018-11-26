@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { HttpService } from '../Shared/http.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,21 @@ import { HttpService } from '../Shared/http.service';
 })
 export class LoginComponent implements OnInit {
   image= "https://images.freeimages.com/images/large-previews/7bc/bald-eagle-1-1400106.jpg";
+  name1;
+  age;
+
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+
+  nameFormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(4)
+  ]);
+
   constructor(public http: HttpService) { }
+  
 
   ngOnInit() {
     console.log(this.http.test);

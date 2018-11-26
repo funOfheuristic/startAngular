@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -13,6 +13,8 @@ import { PeofileChildComponent } from './peofile-child/peofile-child.component';
 import { CustomeDerectiveDirective } from './custome-derective.directive';
 import { StructuralDirectivesDirective } from './structural-directives.directive';
 import { AdditionPipe } from './pipes/addition.pipe';
+import { Material } from './app-material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -28,8 +30,11 @@ import { AdditionPipe } from './pipes/addition.pipe';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    Material,
+    BrowserAnimationsModule
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]
