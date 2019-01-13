@@ -1,6 +1,9 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { HttpService } from '../Shared/http.service';
 import { FormControl, Validators } from '@angular/forms';
+import { DogComponent } from '../dummy/dog/dog.component';
+import { CowComponent } from '../dummy/cow/cow.component';
+import { CatComponent } from '../dummy/cat/cat.component';
 
 @Component({
   selector: 'app-login',
@@ -22,11 +25,22 @@ export class LoginComponent implements OnInit {
     Validators.minLength(4)
   ]);
 
+  dummyComponent = DogComponent;
+
   constructor(public http: HttpService) { }
   
 
   ngOnInit() {
     console.log(this.http.test);
+  }
+
+  assignComponent(component){
+    if(component === 'cow')
+      this.dummyComponent = CowComponent;
+    else if(component === 'dog')
+      this.dummyComponent = DogComponent;
+    else
+      this.dummyComponent = CatComponent;
   }
 
   changeImage(){

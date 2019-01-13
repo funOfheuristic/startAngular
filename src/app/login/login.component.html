@@ -41,3 +41,15 @@
     
 </form>
 <!-- <button [routerLink]="['/profile', 12367]">Go to Profile</button> -->
+<br>
+<div style="width: 50%; margin: auto">
+  <div class="dinamic">
+    <button mat-raised-button color="primary" (click)="assignComponent('cow')">Cow</button>
+    <button mat-raised-button color="primary" (click)="assignComponent('cat')">Cat</button>
+    <button mat-raised-button color="primary" (click)="assignComponent('dog')">Dog</button>
+  </div>
+  
+  <div>
+    <h1><ng-container *ngComponentOutlet="dummyComponent"></ng-container></h1>
+  </div>
+</div>

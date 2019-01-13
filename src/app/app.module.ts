@@ -15,6 +15,9 @@ import { StructuralDirectivesDirective } from './structural-directives.directive
 import { AdditionPipe } from './pipes/addition.pipe';
 import { Material } from './app-material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CowComponent } from './dummy/cow/cow.component';
+import { DogComponent } from './dummy/dog/dog.component';
+import { CatComponent } from './dummy/cat/cat.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PeofileChildComponent,
     CustomeDerectiveDirective,
     StructuralDirectivesDirective,
-    AdditionPipe
+    AdditionPipe,
+    CowComponent,
+    DogComponent,
+    CatComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +41,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     Material,
     BrowserAnimationsModule
-  ],
+  ],entryComponents: [DogComponent, CowComponent, CatComponent],
   providers: [HttpService],
   bootstrap: [AppComponent]
 })
