@@ -14,41 +14,54 @@
 
   </div>
  <br><br> -->
- <mat-card>
-   <h1>Material Form</h1>
-    <mat-form-field style="width: 100%">
-        <input matInput placeholder="Email" [formControl]="emailFormControl">
-        <mat-error *ngIf="emailFormControl.hasError('email')">
-          Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="emailFormControl.hasError('required')">
-          Email is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-  
-    <mat-form-field style="width: 100%">
-        <input matInput placeholder="Name" [formControl]="nameFormControl">
-        <mat-error *ngIf="nameFormControl.hasError('minlength')">
-          Name must be at least 4 characters long.
-        </mat-error>
-        <mat-error *ngIf="nameFormControl.hasError('required')">
-          Name is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+  <mat-card>
+    <h1>Material Form</h1>
 
-      <button mat-raised-button [disabled]="emailFormControl.invalid || nameFormControl.invalid" color="primary">Submit</button>
- </mat-card>
-    
+    <mat-form-field style="width: 100%">
+      <input matInput placeholder="Name" [formControl]="nameFormControl" />
+      <mat-error *ngIf="nameFormControl.hasError('minlength')">
+        Name must be at least 4 characters long.
+      </mat-error>
+      <mat-error *ngIf="nameFormControl.hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%">
+      <input matInput placeholder="Email" [formControl]="emailFormControl"/>
+      <mat-error *ngIf="emailFormControl.hasError('email')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      [disabled]="emailFormControl.invalid || nameFormControl.invalid || loading"
+      color="primary"
+      (click)="register()"
+    >
+      {{buttionText}}
+    </button>
+  </mat-card>
 </form>
 <!-- <button [routerLink]="['/profile', 12367]">Go to Profile</button> -->
-<br>
+<br />
 <div style="width: 50%; margin: auto">
   <div class="dinamic">
-    <button mat-raised-button color="primary" (click)="assignComponent('cow')">Cow</button>
-    <button mat-raised-button color="primary" (click)="assignComponent('cat')">Cat</button>
-    <button mat-raised-button color="primary" (click)="assignComponent('dog')">Dog</button>
+    <button mat-raised-button color="primary" (click)="assignComponent('cow')">
+      Cow
+    </button>
+    <button mat-raised-button color="primary" (click)="assignComponent('cat')">
+      Cat
+    </button>
+    <button mat-raised-button color="primary" (click)="assignComponent('dog')">
+      Dog
+    </button>
   </div>
-  
+
   <div>
     <h1><ng-container *ngComponentOutlet="dummyComponent"></ng-container></h1>
   </div>
